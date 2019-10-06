@@ -13,6 +13,7 @@ import sys
 
 
 def cli(directory, recurse, extensions):
+    extensions = extensions.split(',')
     files = read_directory(directory, extensions, recurse, [])
     for f in files:
         write(f)

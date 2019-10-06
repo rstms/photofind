@@ -21,7 +21,7 @@ test:
 
 install:
 	@echo Installing ${PROJECT} locally
-	${PYTHON} -m pip install --user --upgrade .
+	${PYTHON} -m pip install --user --upgrade --editable .
 
 uninstall: 
 	@echo Uninstalling ${PROJECT} locally
