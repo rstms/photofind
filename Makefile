@@ -5,7 +5,7 @@ PROJECT:=photofind
 # prefer python3
 PYTHON:=python3
 
-.PHONY: help tools test install uninstall dist publish
+.PHONY: help tools test install uninstall dist gitclean publish release clean 
 
 help: 
 	@echo "make tools|test|install|uninstall|dist|publish"
@@ -39,6 +39,11 @@ dist:
 	@echo building ${PROJECT}
 	scripts/bumpbuild src/${PROJECT}/version.py >VERSION
 	${PYTHON} setup.py sdist bdist_wheel
+
+gitclean: 
+	@echo checking git status...
+	$(if `git status --porcelain`, $(info dirty), $(info clean))
+	@echo checked.
 
 publish: dist
 	@echo publishing ${PROJECT} to PyPI
