@@ -38,7 +38,7 @@ gitclean:
 	$(if $(shell git status --porcelain), $(error "git status dirty, commit and push first"))
 
 VERSION: ${SOURCES}
-	scripts/bumpbuild >VERSION src/${PROJECT}/version.py ${BUMP_MAJOR} ${BUMP_MINOR}
+	scripts/bumpbuild >VERSION src/${PROJECT}/version.py ${VERSION}
 	git commit -m "v`cat VERSION`" -a
 	git push
 
