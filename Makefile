@@ -49,7 +49,7 @@ release: dist
 	@echo releasing ${PROJECT} V$(shell cat VERSION) to github
 	TAG="v`cat VERSION`";\
 	git tag -a $$TAG -m "Release $$TAG"
-	git push $$TAG origin
+	git push origin $$TAG
 
 clean:
 	@echo Cleaning up...
