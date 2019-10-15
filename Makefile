@@ -41,9 +41,9 @@ dist:
 	${PYTHON} setup.py sdist bdist_wheel
 
 gitclean: 
-	@echo checking git status...
+	$(info checking git status...)
 	$(if $(shell [ -n "`git status --porcelain`" ]), $(info clean), $(info dirty))
-	@echo checked.
+	$(info checked.)
 
 publish: dist
 	@echo publishing ${PROJECT} to PyPI
