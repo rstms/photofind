@@ -31,10 +31,6 @@ uninstall:
 	@echo Uninstalling ${PROJECT} locally
 	${PYTHON} -m pip uninstall -y ${PROJECT} 
 
-clean:
-	@echo Cleaning up...
-	rm -rf build dist *.egg-info src/$(PROJECT)/*.pyc src/$(PROJECT)/__pycache__ .pytest_cache .tox tests/exif-samples
-
 dist:
 	@echo building ${PROJECT}
 	scripts/bumpbuild src/${PROJECT}/version.py >VERSION
@@ -42,7 +38,7 @@ dist:
 
 gitclean: 
 	$(info checking git status...)
-	$(if $(shell [ -n "`git status --porcelain`" ]), $(info clean), $(info dirty))
+	$(if $(shell git status --porcelain), $(info dirty), $(info clean))
 	$(info checked.)
 
 publish: dist
@@ -52,3 +48,7 @@ publish: dist
 release: dist
 	@echo releasing ${PROJECT} V$(shell cat VERSION) to github
 	git status 
+
+clean:
+	@echo Cleaning up...
+	rm -rf build dist *.egg-info src/$(PROJECT)/*.pyc src/$(PROJECT)/__pycache__ .pytest_cache .tox tests/exif-samples
