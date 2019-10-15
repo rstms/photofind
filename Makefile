@@ -31,15 +31,16 @@ uninstall:
 	@echo Uninstalling ${PROJECT} locally
 	${PYTHON} -m pip uninstall -y ${PROJECT} 
 
-dist:
+dist: gitclean
 	@echo building ${PROJECT}
 	scripts/bumpbuild src/${PROJECT}/version.py >VERSION
+	TAG=V$(file < VERSION)
 	${PYTHON} setup.py sdist bdist_wheel
+	git tag -a ${TAG}
 
 gitclean: 
-	$(info checking git status...)
-	$(if $(shell git status --porcelain), $(info dirty), $(info clean))
-	$(info checked.)
+	$(if $(shell git status --porcelain), $(error "git status dirty, commit and push first))
+	@echo git status is clean
 
 publish: dist
 	@echo publishing ${PROJECT} to PyPI
