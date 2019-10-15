@@ -42,14 +42,11 @@ dist: gitclean
 	git push
 
 publish: dist
-	@echo publishing ${PROJECT} to PyPI
+	@echo publishing ${PROJECT} v`cat VERSION` to PyPI
 	${PYTHON} -m twine upload dist/*
 
 release: dist
-	@echo releasing ${PROJECT} V$(shell cat VERSION) to github
-	TAG="v`cat VERSION`";\
-	git tag -a $$TAG -m "Release $$TAG"
-	git push origin $$TAG
+	TAG="v`cat VERSION`"; git tag -a $$TAG -m "Release $$TAG"; git push origin $$TAG
 
 clean:
 	@echo Cleaning up...
