@@ -37,14 +37,14 @@ uninstall:
 gitclean: 
 	$(if $(shell git status --porcelain), $(error "git status dirty, commit and push first"))
 
-VERSION: ${SOURCES}
+VERSION: ${SOURCES} gitclean
 	scripts/bumpbuild src/${PROJECT}/version.py >VERSION
-
-dist: VERSION gitclean
-	@echo building ${PROJECT}
-	${PYTHON} setup.py sdist bdist_wheel
 	git commit -m "v`cat VERSION`" -a
 	git push
+
+dist: VERSION 
+	@echo building ${PROJECT}
+	${PYTHON} setup.py sdist bdist_wheel
 
 publish: dist
 	@echo publishing ${PROJECT} v`cat VERSION` to PyPI
