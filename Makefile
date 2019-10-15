@@ -42,15 +42,15 @@ VERSION: ${SOURCES}
 	git commit -m "v`cat VERSION`" -a
 	git push
 
-dist: VERSION 
+dist: gitclean VERSION 
 	@echo building ${PROJECT}
 	${PYTHON} setup.py sdist bdist_wheel
 
-publish: dist gitclean
+publish: dist
 	@echo publishing ${PROJECT} v`cat VERSION` to PyPI
 	${PYTHON} -m twine upload dist/*
 
-release: dist gitclean
+release: dist
 	TAG="v`cat VERSION`"; git tag -a $$TAG -m "Release $$TAG"; git push origin $$TAG
 
 clean:
