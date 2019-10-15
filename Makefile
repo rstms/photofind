@@ -8,6 +8,9 @@ PYTHON:=python3
 # find all python sources (used to bump version)
 SOURCES:=$(shell find setup.py src tests -name '*.py')
 
+# if VERSION=major or VERSION=minor specified, 
+$(if ${VERSION}, $(shell rm VERSION))
+
 .PHONY: help tools test install uninstall dist gitclean publish release clean 
 
 help: 
