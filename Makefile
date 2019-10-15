@@ -34,9 +34,8 @@ uninstall:
 dist: gitclean
 	@echo building ${PROJECT}
 	scripts/bumpbuild src/${PROJECT}/version.py >VERSION
-	TAG=v$(shell cat VERSION)
 	${PYTHON} setup.py sdist bdist_wheel
-	git tag -a ${TAG}
+	git tag -a v$(shell cat VERSION)
 
 gitclean: 
 	$(if $(shell git status --porcelain), $(error "git status dirty, commit and push first))
