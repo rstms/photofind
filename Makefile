@@ -1,11 +1,11 @@
 # python package makefile
 
-PROJECT:=photofind
+PROJECT:=$(shell basename `pwd`)
 
 # prefer python3
 PYTHON:=python3
 
-# find all python sources (used to bump version)
+# find all python sources (used to determine when to bump build number)
 SOURCES:=$(shell find setup.py src tests -name '*.py')
 
 # if VERSION=major or VERSION=minor specified, 
@@ -31,7 +31,7 @@ test: tests/exif-samples
 
 install:
 	@echo Installing ${PROJECT} locally
-	${PYTHON} -m pip install --user --upgrade --editable .
+	${PYTHON} -m pip install --upgrade --editable .
 
 uninstall: 
 	@echo Uninstalling ${PROJECT} locally
