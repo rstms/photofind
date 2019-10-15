@@ -5,6 +5,9 @@ PROJECT:=photofind
 # prefer python3
 PYTHON:=python3
 
+# find all python sources (used to bump version)
+SOURCES:=$(shell find setup.py src tests -name '*.py')
+
 .PHONY: help tools test install uninstall dist gitclean publish release clean 
 
 help: 
@@ -34,9 +37,11 @@ uninstall:
 gitclean: 
 	$(if $(shell git status --porcelain), $(error "git status dirty, commit and push first"))
 
-dist: gitclean
-	@echo building ${PROJECT}
+VERSION: ${SOURCES}
 	scripts/bumpbuild src/${PROJECT}/version.py >VERSION
+
+dist: VERSION gitclean
+	@echo building ${PROJECT}
 	${PYTHON} setup.py sdist bdist_wheel
 	git commit -m "v`cat VERSION`" -a
 	git push
