@@ -51,7 +51,6 @@ release: dist
 	git tag -a $$TAG -m "Release $$TAG"
 	git push $$TAG origin
 
-
 clean:
 	@echo Cleaning up...
 	rm -rf build dist *.egg-info src/$(PROJECT)/*.pyc src/$(PROJECT)/__pycache__ .pytest_cache .tox tests/exif-samples
