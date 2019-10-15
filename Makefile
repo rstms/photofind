@@ -37,7 +37,7 @@ uninstall:
 gitclean: 
 	$(if $(shell git status --porcelain), $(error "git status dirty, commit and push first"))
 
-VERSION: ${SOURCES} gitclean
+VERSION: ${SOURCES}
 	scripts/bumpbuild src/${PROJECT}/version.py >VERSION
 	git commit -m "v`cat VERSION`" -a
 	git push
@@ -46,11 +46,11 @@ dist: VERSION
 	@echo building ${PROJECT}
 	${PYTHON} setup.py sdist bdist_wheel
 
-publish: dist
+publish: dist gitclean
 	@echo publishing ${PROJECT} v`cat VERSION` to PyPI
 	${PYTHON} -m twine upload dist/*
 
-release: dist
+release: dist gitclean
 	TAG="v`cat VERSION`"; git tag -a $$TAG -m "Release $$TAG"; git push origin $$TAG
 
 clean:

@@ -26,6 +26,7 @@ default=DEFAULT_EXCLUDE, help='regex pattern to exclude EXIF tags (default is \'
 @click.option('--data/--no-data', is_flag=True, default=True, help='output EXIF data')
 @click.argument('directory', type=click.Path(dir_okay=True, file_okay=False, allow_dash=True), default='.')
 
+# CLI main 
 def cli(directory, recurse, file_filter, include_filter, exclude_filter,
 format_json, compact, no_exif, distance, data):
     """Scan DIRECTORY for image files, printing filenames and selected EXIF data"""
