@@ -9,7 +9,7 @@ PYTHON:=python3
 SOURCES:=$(shell find setup.py src tests -name '*.py')
 
 # if VERSION=major or VERSION=minor specified, 
-$(if ${VERSION}, $(shell rm VERSION))
+$(if ${VERSION}, $(shell touch src/${PROJECT}/version.py))
 
 .PHONY: help tools test install uninstall dist gitclean publish release clean 
 
