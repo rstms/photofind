@@ -31,15 +31,15 @@ uninstall:
 	@echo Uninstalling ${PROJECT} locally
 	${PYTHON} -m pip uninstall -y ${PROJECT} 
 
+gitclean: 
+	$(if $(shell git status --porcelain), $(error "git status dirty, commit and push first"))
+
 dist: gitclean
 	@echo building ${PROJECT}
 	scripts/bumpbuild src/${PROJECT}/version.py >VERSION
 	${PYTHON} setup.py sdist bdist_wheel
-	git tag -a v$(shell cat VERSION)
-
-gitclean: 
-	$(if $(shell git status --porcelain), $(error "git status dirty, commit and push first))
-	@echo git status is clean
+	git commit -m "v`cat VERSION`" -a
+	git push
 
 publish: dist
 	@echo publishing ${PROJECT} to PyPI
@@ -47,7 +47,10 @@ publish: dist
 
 release: dist
 	@echo releasing ${PROJECT} V$(shell cat VERSION) to github
-	git status 
+	TAG="v`cat VERSION`";\
+	git tag -a $$TAG -m "Release $$TAG"
+	git push $$TAG origin
+
 
 clean:
 	@echo Cleaning up...
