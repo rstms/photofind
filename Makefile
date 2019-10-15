@@ -43,3 +43,7 @@ dist:
 publish: dist
 	@echo publishing ${PROJECT} to PyPI
 	${PYTHON} -m twine upload dist/*
+
+release: dist
+	@echo releasing ${PROJECT} V$(shell cat VERSION) to github
+	git status 
