@@ -15,7 +15,11 @@ tools:
 
 TPARM :=
 
-test:
+tests/exif-samples: 
+	@echo "Git Cloning test data..."
+	cd tests && git clone https://github.com/ianare/exif-samples.git
+
+test: tests/exif-samples
 	@echo "Testing..."
 	pytest -vvx --no-print-logs $(TPARM)
 
@@ -29,7 +33,7 @@ uninstall:
 
 clean:
 	@echo Cleaning up...
-	rm -rf build dist *.egg-info src/$(PROJECT)/*.pyc src/$(PROJECT)/__pycache__ .pytest_cache
+	rm -rf build dist *.egg-info src/$(PROJECT)/*.pyc src/$(PROJECT)/__pycache__ .pytest_cache .tox tests/exif-samples
 
 dist:
 	@echo building ${PROJECT}

@@ -34,6 +34,8 @@ setup(
     include_package_data=True,
     install_requires=[
         'Click',
+        'ExifRead',
+        'geopy',
    ],
    entry_points={
        'console_scripts': [

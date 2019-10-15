@@ -13,10 +13,10 @@ def _cli(args, output):
     assert sorted(olist) == sorted(output)
 
 def test_cli():
-    _cli(['tests/data'], ['tests/data/test.jpg','tests/data/test.jpeg'])
+    _cli(['tests/data', '-n', '-c'], ['tests/data/test.jpg','tests/data/test.jpeg'])
 
 def test_types():
-    _cli(['tests/data', '-e', 'png'], ['tests/data/test.png'])
+    _cli(['tests/data', '-n', '-c', '-f', '.+\\.png$'], ['tests/data/test.png'])
 
 def test_recurse():
-    _cli(['tests/data', '-r'], ['tests/data/test.jpg', 'tests/data/test.jpeg', 'tests/data/sub/1.jpg', 'tests/data/sub/2.jpg'])
+    _cli(['tests/data', '-n', '-c', '-r'], ['tests/data/test.jpg', 'tests/data/test.jpeg', 'tests/data/sub/1.jpg', 'tests/data/sub/2.jpg'])
