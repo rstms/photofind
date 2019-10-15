@@ -42,7 +42,7 @@ dist:
 
 gitclean: 
 	@echo checking git status...
-	$(if `git status --porcelain`, $(info dirty), $(info clean))
+	$(if $(shell [ -n "`git status --porcelain`" ]), $(info clean), $(info dirty))
 	@echo checked.
 
 publish: dist
