@@ -34,7 +34,7 @@ uninstall:
 dist: gitclean
 	@echo building ${PROJECT}
 	scripts/bumpbuild src/${PROJECT}/version.py >VERSION
-	TAG=V$(file < VERSION)
+	TAG=V$(file <VERSION)
 	${PYTHON} setup.py sdist bdist_wheel
 	git tag -a ${TAG}
 
