@@ -17,7 +17,7 @@ help:
 	@echo "make tools|test|install|uninstall|dist|publish"
 
 tools: 
-	${PYTHON} -m pip install --user --upgrade setuptools wheel twine
+	${PYTHON} -m pip install --upgrade setuptools wheel twine tox
 
 TPARM :=
 
@@ -58,4 +58,7 @@ release: dist
 
 clean:
 	@echo Cleaning up...
-	rm -rf build dist *.egg-info src/$(PROJECT)/*.pyc src/$(PROJECT)/__pycache__ .pytest_cache .tox tests/exif-samples
+	rm -rf build dist *.egg-info .pytest_cache .tox tests/exif-samples
+	find . -type d -name __pycache__ | xargs rm -rf
+	find . -name '*.pyc' | xargs rm -f
+
