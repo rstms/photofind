@@ -7,7 +7,6 @@ def _cli(args, output):
     runner = CliRunner()
     result = runner.invoke(cli, args, catch_exceptions=False)
     assert result.exit_code == 0
-    assert result.output 
     olist = [o for o in result.output.split('\n') if o]
     print('results:\n%s' % repr(olist))
     assert sorted(olist) == sorted(output)
@@ -20,3 +19,6 @@ def test_types():
 
 def test_recurse():
     _cli(['tests/data', '-n', '-c', '-r'], ['tests/data/test.jpg', 'tests/data/test.jpeg', 'tests/data/sub/1.jpg', 'tests/data/sub/2.jpg'])
+
+def test_gps():
+    _cli(['tests/exif-samples', '-r', '--distance', '1,1,1'], [])

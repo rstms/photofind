@@ -10,16 +10,16 @@ import pprint
 from geopy.distance import geodesic
 #from version import VERSION
 
-DEFAULT_FILE_PATTERN='.*\.[jJ][pP][gG]$|.*\.[jJ][pP][eE][gG]$'
+DEFAULT_FILE_PATTERN='.*\\.[jJ][pP][gG]$|.*\\.[jJ][pP][eE][gG]$|.*\\.[tT][iI][fF]$|.*\\.[tT][iI][fF][fF]$'
 DEFAULT_INCLUDE='.'
-DEFAULT_EXCLUDE='.*[tT]humbnail.*'
+DEFAULT_EXCLUDE='.*[tT]humbnail.*|EXIF MakerNote|Filename'
 
 @click.command()
 @click.option('-r', '--recurse', is_flag=True, default=False, help='descend into subdirectories')
 @click.option('-f', '--file_filter', type=click.STRING, default=DEFAULT_FILE_PATTERN, help='regex pattern to select filenames')
 @click.option('-t', '--include_filter', type=click.STRING, default=DEFAULT_INCLUDE, help='regex pattern to select EXIF tags (default is all)') 
 @click.option('-T', '--exclude_filter', type=click.STRING,
-default=DEFAULT_EXCLUDE, help='regex pattern to exclude EXIF tags (default is \'%s\' use \'\.^\' to exclude nothing' % DEFAULT_EXCLUDE)
+default=DEFAULT_EXCLUDE, help='regex pattern to exclude EXIF tags (default is \'%s\' use \'\\.^\' to exclude nothing' % DEFAULT_EXCLUDE)
 @click.option('-j', '--format-json', is_flag=True, default=False, help='output as JSON')
 @click.option('-c', '--compact', is_flag=True, default=False, help='compact output')
 @click.option('-n', '--no_exif', is_flag=True, default=False, help='output only files with no EXIF data')
@@ -100,12 +100,16 @@ def parse_gps(tags):
 see https://sno.phy.queensu.ca/~phil/exiftool/TagNames/GPS.html
 """
 def parse_dms(text, ref):
+    #print('parse_dms%s' % repr((text,ref)))
     value = 0
-    fields = re.match('\[\s*(.+)\s*,\s*(.+)\s*,\s*(.+)\s*\]', text).groups()
+    fields = re.match('\\[\\s*(.+)\\s*,\\s*(.+)\\s*,\\s*(.+)\\s*\\]', text).groups()
     for i in range(3):
         if '/' in fields[i]:
-           num, den = fields[i].split('/') 
-           fval = float(num) / float(den)
+            num, den = fields[i].split('/') 
+            if float(den) == 0.0:
+                fval = 0.0
+            else:
+                fval = float(num) / float(den)
         else:
            fval = float(fields[i])
         value += fval / (60 ** i)
