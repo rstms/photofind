@@ -1,4 +1,5 @@
 import pytest
+import sys
 from click.testing import CliRunner
 from photofind import cli
 
@@ -21,4 +22,7 @@ def test_recurse():
     _cli(['tests/data', '-n', '-c', '-r'], ['tests/data/test.jpg', 'tests/data/test.jpeg', 'tests/data/sub/1.jpg', 'tests/data/sub/2.jpg'])
 
 def test_gps():
-    _cli(['tests/exif-samples', '-r', '--distance', '1,1,1'], [])
+    if sys.version_info[0] < 3:
+        print('test_gps case requires python3')
+    else:
+        _cli(['tests/exif-samples', '-r', '--distance', '1,1,1'], [])

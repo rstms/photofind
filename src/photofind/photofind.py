@@ -8,7 +8,12 @@ import exifread
 import re
 import pprint
 from geopy.distance import geodesic
-#from version import VERSION
+
+# support python2 or python3
+if sys.version_info[0] < 3:
+    from version import VERSION
+else:
+    from photofind.version import VERSION
 
 DEFAULT_FILE_PATTERN='.*\\.[jJ][pP][gG]$|.*\\.[jJ][pP][eE][gG]$|.*\\.[tT][iI][fF]$|.*\\.[tT][iI][fF][fF]$'
 DEFAULT_INCLUDE='.'
@@ -26,7 +31,7 @@ default=DEFAULT_EXCLUDE, help='regex pattern to exclude EXIF tags (default is \'
 @click.option('-d', '--distance', type=click.STRING, default=None, help='filter output by distance given LATITUDE,LONGITUDE,METERS in decimal (include_filter must include GPS data')
 @click.option('--data/--no-data', is_flag=True, default=True, help='output EXIF data')
 @click.argument('directory', type=click.Path(dir_okay=True, file_okay=False, allow_dash=True), default='.')
-#@click.version_option(VERSION)
+@click.version_option(VERSION)
 
 # CLI main 
 def cli(directory, recurse, file_filter, include_filter, exclude_filter,
