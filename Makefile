@@ -6,7 +6,7 @@ PROJECT:=$(shell basename `pwd`)
 PYTHON:=python3
 
 # find all python sources (used to determine when to bump build number)
-SOURCES:=$(shell find setup.py src tests -name '*.py')
+SOURCES:=$(shell find setup.py Makefile src tests -name '*.py')
 
 # if VERSION=major or VERSION=minor specified, 
 $(if ${VERSION}, $(shell touch src/${PROJECT}/version.py))
@@ -49,7 +49,7 @@ dist: gitclean VERSION
 	@echo building ${PROJECT}
 	${PYTHON} setup.py sdist bdist_wheel
 
-publish: dist
+publish: release
 	@echo publishing ${PROJECT} v`cat VERSION` to PyPI
 	${PYTHON} -m twine upload dist/*
 
