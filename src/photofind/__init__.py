@@ -6,4 +6,3 @@ if sys.version_info[0] < 3:
     from photofind import *
 else:
     from photofind.photofind import *
-#    from photofind.version import version
