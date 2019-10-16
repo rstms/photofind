@@ -17,7 +17,7 @@ help:
 	@echo "make tools|test|install|uninstall|dist|publish"
 
 tools: 
-	${PYTHON} -m pip install --upgrade setuptools wheel twine tox
+	${PYTHON} -m pip install --upgrade setuptools wheel twine tox pytest
 
 TPARM :=
 
