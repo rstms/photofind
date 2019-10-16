@@ -58,7 +58,7 @@ release: dist
 
 clean:
 	@echo Cleaning up...
-	rm -rf build dist *.egg-info .pytest_cache .tox tests/exif-samples
+	rm -rf build dist src/*.egg-info .pytest_cache .tox tests/exif-samples
 	find . -type d -name __pycache__ | xargs rm -rf
 	find . -name '*.pyc' | xargs rm -f
 
