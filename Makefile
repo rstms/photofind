@@ -14,7 +14,7 @@ $(if ${VERSION}, $(shell touch src/${PROJECT}/version.py))
 .PHONY: help tools test install uninstall dist gitclean publish release clean 
 
 help: 
-	@echo "make tools|test|install|uninstall|dist|publish"
+	@echo "make tools|install|uninstall|test|dist|publish|release|clean"
 
 tools: 
 	${PYTHON} -m pip install --upgrade setuptools wheel twine tox pytest
